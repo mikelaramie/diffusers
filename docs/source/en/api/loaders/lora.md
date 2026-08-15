@@ -25,6 +25,7 @@ LoRA is a fast and lightweight training method that inserts and trains a signifi
 - [`SanaLoraLoaderMixin`] provides similar functions for [Sana](https://huggingface.co/docs/diffusers/main/en/api/pipelines/sana).
 - [`HeliosLoraLoaderMixin`] provides similar functions for [HunyuanVideo](https://huggingface.co/docs/diffusers/main/en/api/pipelines/helios).
 - [`HunyuanVideoLoraLoaderMixin`] provides similar functions for [HunyuanVideo](https://huggingface.co/docs/diffusers/main/en/api/pipelines/hunyuan_video).
+- [`HunyuanVideo15LoraLoaderMixin`] provides similar functions for [HunyuanVideo 1.5](https://huggingface.co/docs/diffusers/main/en/api/pipelines/hunyuan_video15).
 - [`Lumina2LoraLoaderMixin`] provides similar functions for [Lumina2](https://huggingface.co/docs/diffusers/main/en/api/pipelines/lumina2).
 - [`WanLoraLoaderMixin`] provides similar functions for [Wan](https://huggingface.co/docs/diffusers/main/en/api/pipelines/wan).
 - [`SkyReelsV2LoraLoaderMixin`] provides similar functions for [SkyReels-V2](https://huggingface.co/docs/diffusers/main/en/api/pipelines/skyreels_v2).
@@ -101,6 +102,10 @@ LoRA is a fast and lightweight training method that inserts and trains a signifi
 ## HunyuanVideoLoraLoaderMixin
 
 [[autodoc]] loaders.lora_pipeline.HunyuanVideoLoraLoaderMixin
+
+## HunyuanVideo15LoraLoaderMixin
+
+[[autodoc]] loaders.lora_pipeline.HunyuanVideo15LoraLoaderMixin
 
 ## Lumina2LoraLoaderMixin
 

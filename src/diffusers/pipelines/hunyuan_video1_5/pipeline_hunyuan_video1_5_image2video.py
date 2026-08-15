@@ -29,6 +29,7 @@ from transformers import (
 )
 
 from ...guiders import ClassifierFreeGuidance
+from ...loaders import HunyuanVideo15LoraLoaderMixin
 from ...models import AutoencoderKLHunyuanVideo15, HunyuanVideo15Transformer3DModel
 from ...schedulers import FlowMatchEulerDiscreteScheduler
 from ...utils import is_torch_xla_available, logging, replace_example_docstring
@@ -190,12 +191,16 @@ def retrieve_timesteps(
     return timesteps, num_inference_steps
 
 
-class HunyuanVideo15ImageToVideoPipeline(DiffusionPipeline):
+class HunyuanVideo15ImageToVideoPipeline(DiffusionPipeline, HunyuanVideo15LoraLoaderMixin):
     r"""
     Pipeline for image-to-video generation using HunyuanVideo1.5.
 
     This model inherits from [`DiffusionPipeline`]. Check the superclass documentation for the generic methods
     implemented for all pipelines (downloading, saving, running on a particular device, etc.).
+
+    The pipeline also inherits the following loading methods:
+        - [`~loaders.HunyuanVideo15LoraLoaderMixin.load_lora_weights`] for loading LoRA weights
+        - [`~loaders.HunyuanVideo15LoraLoaderMixin.save_lora_weights`] for saving LoRA weights
 
     Args:
         transformer ([`HunyuanVideo15Transformer3DModel`]):

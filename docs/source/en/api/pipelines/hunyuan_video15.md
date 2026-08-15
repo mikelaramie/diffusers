@@ -101,6 +101,7 @@ pipe.guider = pipe.guider.new(guidance_scale=5.0)
 
 Read more on Guider [here](../../using-diffusers/guiders).
 
+- HunyuanVideo 1.5 supports LoRAs with [`~loaders.HunyuanVideo15LoraLoaderMixin.load_lora_weights`].
 
 
 ## HunyuanVideo15Pipeline
