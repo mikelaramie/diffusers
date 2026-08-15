@@ -1,0 +1,28 @@
+---
+description: Lazy-import registration when editing Diffusers __init__.py files.
+globs: src/diffusers/**/__init__.py
+alwaysApply: false
+---
+
+# Diffusers lazy imports
+
+New public classes must be listed in `_import_structure` (and the matching
+`TYPE_CHECKING` import block) or `from diffusers import Foo` fails.
+
+- Add the name to the submodule's list in the nearest `__init__.py` **and**
+  `src/diffusers/__init__.py` when it is a top-level export.
+- Don't import the class at module top-level in those files — the map is
+  what makes the lazy module work.
+- After adding a public object, CI's `utils/check_dummies.py` /
+  `utils/check_inits.py` must still pass.
+
+```python
+# ❌ BAD — class file exists, map unchanged
+# src/diffusers/schedulers/scheduling_foo.py  (new)
+# src/diffusers/__init__.py                   (untouched)
+
+# ✅ GOOD
+_import_structure["schedulers"].append("FooScheduler")
+```
+
+See the comment at the top of `src/diffusers/__init__.py`.

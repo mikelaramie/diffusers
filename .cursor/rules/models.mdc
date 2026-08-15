@@ -1,0 +1,27 @@
+---
+description: Model conventions when editing Diffusers transformers, UNets, and VAEs.
+globs: src/diffusers/models/**/*.py
+alwaysApply: false
+---
+
+# Diffusers models
+
+Read `.ai/models.md` before editing. Don't invent a parallel style.
+
+- Single-file layout: attention, blocks, and RoPE live in `transformer_<name>.py` (or import / `# Copied from` a shared layer).
+- Load weights only via `from_pretrained` / `from_single_file` — no `hf_hub_download` or custom `from_pretrained`.
+- No new mandatory dependency (e.g. `einops`) without discussion.
+- Don't declare `attention_mask` in `forward` if you ignore it.
+
+```python
+# ❌ BAD
+hidden_states = F.scaled_dot_product_attention(query, key, value)
+
+# ✅ GOOD
+hidden_states = dispatch_attention_fn(
+    query, key, value, attn_mask=attention_mask,
+    backend=self._attention_backend, parallel_config=self._parallel_config,
+)
+```
+
+The `Attention` class and its processor stay in the model file. Processor uses `dispatch_attention_fn`. See `.ai/models.md` (Attention pattern).

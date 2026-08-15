@@ -1,0 +1,22 @@
+---
+description: Doc page and docstring conventions when editing Diffusers docs.
+globs: docs/source/**/*.md
+alwaysApply: false
+---
+
+# Diffusers docs
+
+- New pages must be registered in `docs/source/<lang>/_toctree.yml` or they
+  won't appear on the site (`docs/README.md`).
+- Docstrings are Google style (see `docs/source/en/conceptual/contribution.md`).
+- Don't add images/videos to the repo — host them on a Hub dataset
+  (`hf-internal-testing` or `huggingface/documentation-images`).
+- Public API changes need a matching `docs/source/en/` update (`.ai/review-rules.md`).
+
+```yaml
+# ❌ BAD — new docs/source/en/api/pipelines/foo.md, _toctree.yml untouched
+
+# ✅ GOOD — add a toctree entry
+- local: api/pipelines/foo
+  title: Foo
+```

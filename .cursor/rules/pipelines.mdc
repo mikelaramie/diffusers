@@ -1,0 +1,27 @@
+---
+description: Standard DiffusionPipeline conventions when editing pipeline files.
+globs: src/diffusers/pipelines/**/*.py
+alwaysApply: false
+---
+
+# Diffusers pipelines
+
+Read `.ai/pipelines.md` before editing. New pipelines default to **modular** — use `.ai/skills/model-integration`, not a new `DiffusionPipeline`, unless the user chose standard.
+
+- `@torch.no_grad()` on `__call__` only — not on helpers `__call__` already covers.
+- Config-derived values (`vae_scale_factor`, sample rate) are `__init__` attributes with `getattr` fallbacks, not `@property`.
+- Reuse `src/diffusers/schedulers/` and `guiders/`; don't inline `scheduler.step`.
+- Each variant (img2img, inpaint) is its own class/file — don't subclass a sibling pipeline in `src/`.
+- Register new public classes in the lazy `__init__.py` map.
+
+```python
+# ❌ BAD
+@property
+def vae_scale_factor(self):
+    return 2 ** (len(self.vae.config.block_out_channels) - 1)
+
+# ✅ GOOD — see pipeline_flux.py
+self.vae_scale_factor = (
+    2 ** (len(self.vae.config.block_out_channels) - 1) if getattr(self, "vae", None) else 8
+)
+```

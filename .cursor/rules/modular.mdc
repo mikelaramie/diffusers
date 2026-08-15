@@ -1,0 +1,25 @@
+---
+description: Modular pipeline conventions when editing ModularPipeline blocks.
+globs: src/diffusers/modular_pipelines/**/*.py
+alwaysApply: false
+---
+
+# Diffusers modular pipelines
+
+Read `.ai/modular.md` before editing. Skim `modular_pipelines/flux2/`, `qwenimage/`, or `wan/` for layout (`encoders.py`, `before_denoise.py`, `denoise.py`, `decoders.py`).
+
+- Run blocks as a pipeline: `init_pipeline()` → `load_components()` → call it.
+- Don't call `block(components, state)` or hand-build a `PipelineState`.
+- New modular repos should ship `modular_model_index.json`.
+- Read config via `pipe.config.<name>` (direct attribute access is deprecated).
+
+```python
+# ❌ BAD
+state = PipelineState()
+block(components, state)
+
+# ✅ GOOD
+pipe = MyTextEncoderStep().init_pipeline("org/tiny-model")
+pipe.load_components()
+ids = pipe(prompt="a robot", output="cond_input_ids")
+```
