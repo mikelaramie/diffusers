@@ -125,10 +125,12 @@ dmypy.json
 .vs
 .vscode
 
-# Cursor (ignore local IDE state; keep shared project skills)
+# Cursor (ignore local IDE state; keep shared project skills and rules)
 .cursor/*
 !.cursor/skills/
 !.cursor/skills/**
+!.cursor/rules/
+!.cursor/rules/**
 
 # Pycharm
 .idea
