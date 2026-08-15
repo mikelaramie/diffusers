@@ -14,6 +14,8 @@ Get a new engineer from a request to a correct skeleton (design + code) without
 reading the whole tree. Copy **one** in-tree reference. Don't invent a new
 layout.
 
+If the ask is still a vague feature/model request (PM, researcher, paper,
+checkpoint, "can we add…"), run `.cursor/skills/request-intake` first.
 If the env isn't verified yet, run `.cursor/skills/dev-setup` first.
 
 Read [reference.md](reference.md) for the change-type table and file layouts.
@@ -68,6 +70,7 @@ Always end with this block (fill every section). PM, QA, and DevOps read the sam
 
 | Next | Use |
 |---|---|
+| Vague request / gather requirements | `.cursor/skills/request-intake` |
 | Finish a new model/pipeline | `.ai/skills/model-integration` |
 | Strengthen tests / local CI before a PR | `.cursor/skills/pre-merge-quality` |
 | Open a fork PR once READY | `.cursor/skills/ci-guardrails` |
