@@ -1,0 +1,33 @@
+---
+description: Approved context, coding constraints, and PR target for this Diffusers fork.
+alwaysApply: true
+---
+
+# Diffusers boundaries
+
+Read `.ai/AGENTS.md` before editing library code. Conventions live there — do not restate or invent them.
+
+## Allowed context
+
+- This repo, `.ai/`, and in-tree docs (`docs/source/en/`).
+- Do not copy code from random GitHub or research repos unless `.ai/skills/model-integration` is in use.
+
+## Do not
+
+- Edit `.ai/` (maintainer-owned on upstream; don't send those diffs in a contributor PR).
+- Edit a `# Copied from ...` block by hand — change the source, then `make fix-copies`.
+- Add fallbacks, unused parameters, or deprecation shims for APIs that never shipped.
+
+```python
+# ❌ BAD — unused param "for API consistency"
+def encode_prompt(self, prompt, prompt_2=None, callback=None):
+    ...
+
+# ✅ GOOD — only the inputs this path uses
+def encode_prompt(self, prompt):
+    ...
+```
+
+## PRs
+
+Open pull requests against **this fork's `main`** (`mikelaramie/diffusers`), not `huggingface/diffusers`.

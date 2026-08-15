@@ -1,0 +1,32 @@
+---
+description: First-PR and library test conventions. Apply when editing tests.
+globs: tests/**/*.py
+alwaysApply: false
+---
+
+# Diffusers tests
+
+Canonical guide: `.ai/testing.md`. Follow it; don't invent a parallel style.
+
+## Dummy components
+
+Build **real classes** at tiny config. Don't hand-roll mocks that echo today's pipeline reads.
+
+```python
+# ❌ BAD
+vae = SimpleNamespace(config=SimpleNamespace(latent_channels=4))
+
+# ✅ GOOD — real VAE, tiny dims (see tests/pipelines/wan/test_wan.py)
+torch.manual_seed(0)
+vae = AutoencoderKL(in_channels=3, out_channels=3, latent_channels=4, ...)
+```
+
+Don't monkeypatch a component method just to capture call args — call the real method and assert on state.
+
+## First PR for a new model/pipeline
+
+- Pipeline tests: pytest mixins (`PipelineTesterMixin`, `MemoryTesterMixin`), not `unittest.TestCase`.
+- Model tests: generate with `python utils/generate_model_tests.py <model.py>`, then fill TODOs.
+- **No** `@slow` / `RUN_SLOW` and **no** `LoraTesterMixin` / `tests/lora/test_lora_layers_*.py` on the initial PR.
+
+LoRA and slow tests are a later, separate change after maintainer discussion.
