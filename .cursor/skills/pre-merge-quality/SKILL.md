@@ -83,12 +83,14 @@ Always end with:
 ```
 
 This fills the QA section of a `scaffold-contribution` change brief when one
-exists. Do not open a PR from this skill.
+exists. Do not open a PR from this skill — if the verdict is READY, the next
+step is `.cursor/skills/ci-guardrails`.
 
 ## Hand off
 
 | Next | Use |
 |---|---|
+| Open a fork PR (READY only) | `.cursor/skills/ci-guardrails` |
 | Convention / dead-code review | `.ai/skills/self-review` (already run in step 5) |
 | New model/pipeline | `.ai/skills/model-integration` |
 | Scaffold a first change | `.cursor/skills/scaffold-contribution` |
