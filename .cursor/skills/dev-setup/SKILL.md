@@ -1,0 +1,101 @@
+---
+name: dev-setup
+description: >
+  Set up a local Diffusers contributor environment and walk a new developer
+  through a first change. Use when cloning the repo, installing from source,
+  onboarding, getting started contributing, running the first tests, or
+  asking how to open a first PR.
+---
+
+# Diffusers contributor setup
+
+Get a new developer from clone to a verified editable install, then a small
+correct first change. Do the steps; don't lecture about diffusion theory.
+
+Read [reference.md](reference.md) only for the repo map or command details.
+
+## 1. Prerequisites
+
+- Python **>= 3.10** (`python_requires` in `setup.py`)
+- A virtualenv (create one if the user isn't already in one)
+- Git; they should work on a **fork + feature branch**, never `main`
+- GPU is optional. Unit tests and schedulers run on CPU.
+- A Hugging Face token is **not** required for setup or most unit tests.
+  Only needed for gated Hub models.
+
+If `python --version` is too old, stop and say so. Don't improvise.
+
+## 2. Install
+
+From the repo root, in the venv:
+
+```bash
+pip install -e ".[dev]"
+```
+
+`[dev]` is quality + test + training + docs + torch. That is the contributor
+install. Don't suggest `pip install diffusers` (that's PyPI, not this checkout).
+
+## 3. Verify (required)
+
+Run these, in order. Stop if one fails.
+
+```bash
+python -c "import diffusers; print(diffusers.__version__)"
+```
+
+Expect a `.dev0` version (this checkout), not a released PyPI version.
+
+```bash
+python -m pytest tests/schedulers/test_scheduler_ddim.py -q
+```
+
+This is CPU-only and needs no Hub download. **Do not** run `make test` —
+the full suite is huge.
+
+Optional, only if they want a real pipeline smoke test and have network:
+
+```python
+from diffusers import DiffusionPipeline
+pipe = DiffusionPipeline.from_pretrained(
+    "hf-internal-testing/tiny-stable-diffusion-pipe", safety_checker=None
+)
+```
+
+## 4. Daily contributor commands
+
+| Task | Command |
+|---|---|
+| Tests for what you touched | `python -m pytest tests/<path>/test_<thing>.py` |
+| Format + autofix | `make style` |
+| Lint (CI-equivalent check) | `make quality` |
+| Sync `# Copied from` blocks | `make fix-copies` |
+
+Rules the agent must follow:
+
+- Never edit a `# Copied from ...` block by hand — change the source, then
+  `make fix-copies`. Remove the header only to intentionally break the link.
+- Don't add fallback paths, unused params, or "just in case" config.
+- Conventions live in `.ai/AGENTS.md`. Read that before writing library code.
+- Don't edit `.ai/` in a contributor PR.
+
+## 5. First contribution
+
+1. Confirm the env from steps 2–3 is green.
+2. Point them at [good first issues](https://github.com/huggingface/diffusers/issues?q=is%3Aopen+is%3Aissue+label%3A%22good+first+issue%22). For a new model/pipeline, stop and use `.ai/skills/model-integration` instead.
+3. `git checkout -b <descriptive-name>` off up-to-date `main`.
+4. Make the smallest change that fixes the issue.
+5. Run **only** the affected tests, then `make style`.
+6. Before opening a PR, run `.ai/skills/self-review`. Share that report on the PR.
+7. PR description must include: coordination/issue link, test commands + results, self-review notes.
+
+Human contribution details: `docs/source/en/conceptual/contribution.md`.
+
+## Which existing skill next
+
+| They want to… | Use |
+|---|---|
+| Add/convert a model or pipeline | `.ai/skills/model-integration` |
+| Review a diff before a PR | `.ai/skills/self-review` |
+| Run or inspect a pipeline from the CLI | `.ai/skills/diffusers-cli` |
+| Package a modular block for the Hub | `.ai/skills/custom-blocks` |
