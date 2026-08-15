@@ -69,5 +69,6 @@ Always end with this block (fill every section). PM, QA, and DevOps read the sam
 | Next | Use |
 |---|---|
 | Finish a new model/pipeline | `.ai/skills/model-integration` |
+| Strengthen tests / local CI before a PR | `.cursor/skills/pre-merge-quality` |
 | Review the diff before a PR | `.ai/skills/self-review` |
 | Env / first clone | `.cursor/skills/dev-setup` |
