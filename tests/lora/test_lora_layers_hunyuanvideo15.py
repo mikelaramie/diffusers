@@ -187,6 +187,11 @@ class HunyuanVideo15LoRATests(unittest.TestCase, PeftLoraLoaderMixinTests):
     def test_simple_inference_with_text_denoiser_lora_unfused(self):
         super().test_simple_inference_with_text_denoiser_lora_unfused(expected_atol=9e-3)
 
+    def test_lora_state_dict_rejects_original_hunyuan_video_v1_keys(self):
+        state_dict = {"double_blocks.0.img_attn_qkv.weight": torch.zeros(1, 1)}
+        with self.assertRaisesRegex(ValueError, "img_attn_qkv"):
+            self.pipeline_class.lora_state_dict(state_dict)
+
     @unittest.skip("Not supported in HunyuanVideo 1.5.")
     def test_simple_inference_with_text_denoiser_block_scale(self):
         pass
