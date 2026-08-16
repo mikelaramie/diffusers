@@ -7,6 +7,8 @@ alwaysApply: false
 # Diffusers models
 
 Read `.ai/models.md` before editing. Don't invent a parallel style.
+New architectures: also read `docs/source/en/conceptual/philosophy.md`
+(single-file policy, copy-then-adapt, highest precision / lowest opt by default).
 
 - Single-file layout: attention, blocks, and RoPE live in `transformer_<name>.py` (or import / `# Copied from` a shared layer).
 - Load weights only via `from_pretrained` / `from_single_file` — no `hf_hub_download` or custom `from_pretrained`.

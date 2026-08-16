@@ -29,11 +29,16 @@ this PR did not touch are out of scope.
 ## Other
 
 - `# Copied from` block edited by hand → change the source, `make fix-copies`
-- New public class not in the matching `__init__.py` lazy-import map
-- New pipeline page not in `docs/source/en/_toctree.yml`
+- New public library class not in the matching `__init__.py` lazy-import map
+- New docs page not in `docs/source/<lang>/_toctree.yml`
+- Community pipeline: more than one `DiffusionPipeline` subclass in the file, or missing `register_modules`; README table row missing
+- Official training example: missing `requirements.txt`, README command, or `test_*.py`
+- Research example: missing maintainer `@handle` in the README
+- New model / pipeline / scheduler that fights `docs/source/en/conceptual/philosophy.md` (silent fallbacks, fused model+scheduler, new arch in an existing file)
 
 ## Local commands (CI equivalents)
 
 `pr_tests.yml` `check_code_quality` → `make quality` (after `make style`).
+`examples/**/*.py` also trips `pr_tests.yml`.
 
 Do not run `make test`.

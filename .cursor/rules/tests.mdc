@@ -1,5 +1,5 @@
 ---
-description: First-PR and library test conventions. Apply when editing tests.
+description: Library test conventions for Diffusers. Apply when editing tests.
 globs: tests/**/*.py
 alwaysApply: false
 ---
@@ -23,10 +23,15 @@ vae = AutoencoderKL(in_channels=3, out_channels=3, latent_channels=4, ...)
 
 Don't monkeypatch a component method just to capture call args — call the real method and assert on state.
 
-## First PR for a new model/pipeline
+## New tests
 
 - Pipeline tests: pytest mixins (`PipelineTesterMixin`, `MemoryTesterMixin`), not `unittest.TestCase`.
 - Model tests: generate with `python utils/generate_model_tests.py <model.py>`, then fill TODOs.
-- **No** `@slow` / `RUN_SLOW` and **no** `LoraTesterMixin` / `tests/lora/test_lora_layers_*.py` on the initial PR.
+- Scheduler tests: copy a neighbor under `tests/schedulers/` (DDIM is the usual template).
+- Official example tests live next to the script (`examples/<name>/test_*.py`). Community pipelines and research examples do not require tests.
 
-LoRA and slow tests are a later, separate change after maintainer discussion.
+## Initial model/pipeline PR only
+
+On the **first** PR that adds a new model or pipeline: **no** `@slow` / `RUN_SLOW` and **no** `LoraTesterMixin` / `tests/lora/test_lora_layers_*.py`. Those are a later, separate change.
+
+A dedicated LoRA, docs, scheduler, community-pipeline, or example PR is not an "initial model PR" — use the matching neighbor test, not this restriction.

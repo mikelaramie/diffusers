@@ -1,0 +1,28 @@
+---
+description: Training-example and community-pipeline conventions.
+globs: examples/**
+alwaysApply: false
+---
+
+# Diffusers examples
+
+Handbook: `docs/source/en/conceptual/contribution.md` (community pipelines
+and training examples).
+
+## Community pipelines (`examples/community/`)
+
+Experimental / one-off inference, not a new core architecture. One
+`DiffusionPipeline` subclass per file, `register_modules` in `__init__`,
+one `__call__`. Add a row to `examples/community/README.md`. Tutorial:
+`examples/community/one_step_unet.py`.
+
+## Official training (`examples/<name>/`, not `community` or `research_projects`)
+
+Single-file script, `python train_….py --args`, Accelerate,
+`requirements.txt`, README with a command and expected results, plus
+`test_*.py` in the same folder. Neighbor: `examples/dreambooth/`.
+
+## Research training (`examples/research_projects/<name>/`)
+
+Same layout, no test required. README must name the maintainer (`@handle`).
+Experimental training belongs here, not in official `examples/`.

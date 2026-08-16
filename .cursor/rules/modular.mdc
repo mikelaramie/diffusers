@@ -6,7 +6,7 @@ alwaysApply: false
 
 # Diffusers modular pipelines
 
-Read `.ai/modular.md` before editing. Skim `modular_pipelines/flux2/`, `qwenimage/`, or `wan/` for layout (`encoders.py`, `before_denoise.py`, `denoise.py`, `decoders.py`).
+Read `.ai/modular.md` before editing. Skim `modular_pipelines/flux2/`, `qwenimage/`, or `wan/` for layout (`encoders.py`, `before_denoise.py`, `denoise.py`, `decoders.py`). Also read `docs/source/en/conceptual/philosophy.md` (blocks are definitions; run via `init_pipeline()`; no cross-imports between modular pipelines).
 
 - Run blocks as a pipeline: `init_pipeline()` → `load_components()` → call it.
 - Don't call `block(components, state)` or hand-build a `PipelineState`.
