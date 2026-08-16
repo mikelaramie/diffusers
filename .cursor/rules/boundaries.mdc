@@ -7,14 +7,19 @@ alwaysApply: true
 
 Read `.ai/AGENTS.md` before editing library code. Conventions live there — do not restate or invent them.
 
+New models, pipelines, and schedulers must follow
+`docs/source/en/conceptual/philosophy.md`. Do not silently correct bad
+input, fuse model and scheduler logic, or stuff a new architecture into an
+existing file.
+
 ## Allowed context
 
-- This repo, `.ai/`, and in-tree docs (`docs/source/en/`).
-- Do not copy code from random GitHub or research repos unless `.ai/skills/model-integration` is in use.
+- This repo, `.ai/`, in-tree docs (`docs/source/`), and `examples/`.
+- Do not copy code from random GitHub or research repos unless `.ai/skills/model-integration` is in use and the user pointed at that repo.
 
 ## Do not
 
-- Edit `.ai/` (maintainer-owned on upstream; don't send those diffs in a contributor PR).
+- Edit `.ai/` unless the user asked to change agent conventions.
 - Edit a `# Copied from ...` block by hand — change the source, then `make fix-copies`.
 - Add fallbacks, unused parameters, or deprecation shims for APIs that never shipped.
 
@@ -30,4 +35,6 @@ def encode_prompt(self, prompt):
 
 ## PRs
 
-Open pull requests against **this fork's `main`** (`mikelaramie/diffusers`), not `huggingface/diffusers`.
+You are working as the maintainer of this fork. Open pull requests against
+**this fork's `main`** (`mikelaramie/diffusers`), not `huggingface/diffusers`.
+Confirming the intake/plan is the maintainer ack — do not wait on upstream.

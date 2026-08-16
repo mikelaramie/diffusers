@@ -1,0 +1,28 @@
+---
+description: Scheduler conventions when adding or editing Diffusers samplers.
+globs: src/diffusers/schedulers/**/*.py
+alwaysApply: false
+---
+
+# Diffusers schedulers
+
+There is no `.ai/schedulers.md`. Follow
+`docs/source/en/conceptual/philosophy.md` (Schedulers) and copy a neighbor.
+
+- One algorithm per file under `src/diffusers/schedulers/`. Novel sampler → new file.
+- Inherit `SchedulerMixin` and `ConfigMixin`. Self-contained — do not import from large utils modules.
+- Required: `set_num_inference_steps`, `step` (x_t → x_{t-1}), and a `timesteps` attribute.
+- Use `# Copied from` for shared helpers; don't abstract a scheduler base class.
+- Register new public classes in the lazy `__init__.py` map.
+
+```python
+# ❌ BAD — new sampler stuffed into scheduling_ddim.py
+
+# ✅ GOOD
+# src/diffusers/schedulers/scheduling_foo.py
+class FooScheduler(SchedulerMixin, ConfigMixin):
+    def set_num_inference_steps(self, num_inference_steps): ...
+    def step(self, model_output, timestep, sample, ...): ...  # returns prev_sample
+```
+
+Reference: `scheduling_ddim.py` + `tests/schedulers/test_scheduler_ddim.py`.

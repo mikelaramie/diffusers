@@ -16,6 +16,8 @@ clear new-code hits; **report** judgment calls. Then run
 
 Canonical test rules: `.ai/testing.md` and `.cursor/rules/tests.mdc`.
 Scan list: [reference.md](reference.md).
+Philosophy (if the diff adds a model, pipeline, or scheduler):
+`docs/source/en/conceptual/philosophy.md`.
 
 ## 1. Scope the diff
 
@@ -24,20 +26,27 @@ git diff origin/main...HEAD
 git diff
 ```
 
-List touched paths under `src/`, `tests/`, and `docs/`. If the branch trails
-`main` and the diff is polluted, scope to this branch's commits only.
+List touched paths under `src/`, `tests/`, `docs/`, and `examples/`. If the
+branch trails `main` and the diff is polluted, scope to this branch's
+commits only.
 
 ## 2. Scan
 
 Walk the diff against [reference.md](reference.md). Record each hit as
 `path:line` · pattern · fix or leave.
 
+If the diff adds a **model, pipeline, or scheduler**, check it against
+philosophy (single-file, no silent fallbacks, scheduler separate from the
+model, CPU/float32 defaults). Report conflicts; don't "fix" design by
+inventing a new abstraction.
+
 ## 3. Run local CI equivalents
 
 Never `make test`.
 
-- Touched tests: `python -m pytest tests/<path>/test_<thing>.py`
-- `src/` or `tests/` changed: `make style`, then `make quality`
+- Touched library tests: `python -m pytest tests/<path>/test_<thing>.py`
+- Touched official example tests: `python -m pytest examples/<name>/test_<name>.py`
+- `src/`, `tests/`, or `examples/**/*.py` changed: `make style`, then `make quality`
 - New public classes: note that CI's `check_repository_consistency` also runs
   `utils/check_copies.py`, `utils/check_dummies.py`, `utils/check_inits.py`
   (via repo checks), and `utils/check_forward_call_docstrings.py`
@@ -59,8 +68,9 @@ and `quality` targets).
 **Report only** (leave for the user or `self-review`)
 
 - Changes in existing files that are unrelated drive-bys
-- Dead code, philosophy, docs impact
+- Dead code, philosophy conflicts, docs impact
 - Whether a dedicated LoRA PR *should* add `tests/lora/…` (allowed; don't invent it)
+- Whether an experimental pipeline belongs in `examples/community` vs `src/`
 
 Do not rewrite tests to "be safer." Strengthen them only when they violate
 `.ai/testing.md`.
@@ -93,4 +103,4 @@ step is `.cursor/skills/ci-guardrails`.
 | Open a fork PR (READY only) | `.cursor/skills/ci-guardrails` |
 | Convention / dead-code review | `.ai/skills/self-review` (already run in step 5) |
 | New model/pipeline | `.ai/skills/model-integration` |
-| Scaffold a first change | `.cursor/skills/scaffold-contribution` |
+| Scaffold a change | `.cursor/skills/scaffold-contribution` |

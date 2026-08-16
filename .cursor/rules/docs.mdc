@@ -7,7 +7,8 @@ alwaysApply: false
 # Diffusers docs
 
 - New pages must be registered in `docs/source/<lang>/_toctree.yml` or they
-  won't appear on the site (`docs/README.md`).
+  won't appear on the site (`docs/README.md`). Translations live under
+  `docs/source/ko/`, `docs/source/zh/`, etc. — match the English neighbor.
 - Docstrings are Google style (see `docs/source/en/conceptual/contribution.md`).
 - Don't add images/videos to the repo — host them on a Hub dataset
   (`hf-internal-testing` or `huggingface/documentation-images`).

@@ -8,6 +8,7 @@ for a PR into `main`.
 | `src/diffusers/**/*.py`, `tests/**`, `utils/`, `scripts/`, `examples/**/*.py`, `setup.py`, `.github/**.yml` | `pr_tests.yml` — `make quality`, repo consistency, fast CPU tests | `make style` && `make quality`; scoped `pytest` |
 | `src/diffusers/modular_pipelines/**`, `tests/modular_pipelines/**` | `pr_modular_tests.yml` as well | scoped modular pytest |
 | `docs/**` or `src/diffusers/**/*.py` or `examples/**` | `build_pr_documentation.yml` | don't invent a local doc build unless docs changed and the user wants it |
+| `examples/community/**` | `pr_tests.yml` (Python) + docs build if README/table changed | scoped pytest usually N/A; `make style` if `.py` changed |
 | `src/diffusers/loaders/lora_*.py`, `peft.py`, `pipeline_utils.py`, `pipeline_loading_utils.py`, `modeling_utils.py`, `model_loading_utils.py`, `tests/pipelines/test_pipelines_common.py`, `tests/models/test_modeling_common.py`, `examples/**/*.py` | `pr_tests_gpu.yml` | often **absent on this fork** |
 | Maintainer comment `@claude` | `claude_review.yml` | not automatic |
 | Style-bot comment | `pr_style_bot.yml` | needs HF bot secrets; **won't work the same on this fork** |

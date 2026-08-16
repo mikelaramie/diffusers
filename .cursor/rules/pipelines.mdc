@@ -6,7 +6,7 @@ alwaysApply: false
 
 # Diffusers pipelines
 
-Read `.ai/pipelines.md` before editing. New pipelines default to **modular** — use `.ai/skills/model-integration`, not a new `DiffusionPipeline`, unless the user chose standard.
+Read `.ai/pipelines.md` before editing. New pipelines default to **modular** — use `.ai/skills/model-integration`, not a new `DiffusionPipeline`, unless the user chose standard. Read `docs/source/en/conceptual/philosophy.md` first (one `__call__`, named after the task, `from_pretrained`, inference-only examples). Experimental one-off inference belongs in `examples/community`, not `src/`.
 
 - `@torch.no_grad()` on `__call__` only — not on helpers `__call__` already covers.
 - Config-derived values (`vae_scale_factor`, sample rate) are `__init__` attributes with `getattr` fallbacks, not `@property`.

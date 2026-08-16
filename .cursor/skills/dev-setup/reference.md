@@ -13,10 +13,12 @@ which tests/files to touch.
 | `src/diffusers/schedulers/` | Noise / sampling schedulers |
 | `src/diffusers/loaders/` | Mixins for LoRA, single-file, IP-Adapter, etc. |
 | `tests/` | Mirrors `src/diffusers/` (pipelines, models, schedulers, …) |
-| `examples/` | Training scripts (DreamBooth, LoRA, ControlNet, …) |
-| `docs/source/en/` | User-facing docs |
+| `examples/` | Official training scripts (DreamBooth, ControlNet, …) — not `community` / `research_projects` |
+| `examples/community/` | GitHub community pipelines (`custom_pipeline`) |
+| `examples/research_projects/` | Author-maintained experimental training |
+| `docs/source/<lang>/` | User-facing docs (en, ko, zh, …) |
 | `scripts/` | One-off conversion and maintenance scripts |
-| `.ai/` | Agent conventions and task skills (maintainer-owned — do not edit in a contributor PR) |
+| `.ai/` | Agent conventions and task skills — edit only when the user asked to change them |
 
 New public classes are registered via lazy imports in the relevant `__init__.py`
 files. Adding a class without wiring it there means `from diffusers import …`
@@ -58,6 +60,8 @@ If `make` is unavailable, the underlying commands are in the top-level
 - `.ai/models.md` / `.ai/pipelines.md` / `.ai/modular.md` — implementation conventions
 - `.ai/testing.md` — required test layers and dummy-component rules
 - `.ai/review-rules.md` — what reviewers (and `self-review`) check
+- `docs/source/en/conceptual/philosophy.md` — design constitution for models, pipelines, schedulers
+- `docs/source/en/conceptual/contribution.md` — how to contribute
 
 ## Fork sync
 
