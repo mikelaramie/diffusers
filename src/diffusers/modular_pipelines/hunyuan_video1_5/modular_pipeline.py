@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from ...loaders import HunyuanVideoLoraLoaderMixin
+from ...loaders import HunyuanVideo15LoraLoaderMixin
 from ...utils import logging
 from ..modular_pipeline import ModularPipeline
 
@@ -22,7 +22,7 @@ logger = logging.get_logger(__name__)
 
 class HunyuanVideo15ModularPipeline(
     ModularPipeline,
-    HunyuanVideoLoraLoaderMixin,
+    HunyuanVideo15LoraLoaderMixin,
 ):
     """
     A ModularPipeline for HunyuanVideo 1.5.
