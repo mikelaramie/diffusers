@@ -101,6 +101,31 @@ pipe.guider = pipe.guider.new(guidance_scale=5.0)
 
 Read more on Guider [here](../../using-diffusers/guiders).
 
+- HunyuanVideo 1.5 supports LoRAs with [`~loaders.HunyuanVideo15LoraLoaderMixin.load_lora_weights`]. Checkpoints must be Diffusers/PEFT format. Original HunyuanVideo v1 packs (`img_attn_qkv` keys) are not supported — load those with [`HunyuanVideoPipeline`].
+
+  <details>
+  <summary>Show example code</summary>
+
+  ```py
+  import torch
+  from diffusers import HunyuanVideo15Pipeline
+  from diffusers.utils import export_to_video
+
+  pipeline = HunyuanVideo15Pipeline.from_pretrained(
+      "HunyuanVideo-1.5-Diffusers-480p_t2v",
+      dtype=torch.bfloat16,
+  )
+  pipeline.load_lora_weights("path/to/hunyuanvideo15_lora", adapter_name="my-lora")
+  pipeline.set_adapters("my-lora")
+  pipeline.enable_model_cpu_offload()
+  pipeline.vae.enable_tiling()
+
+  prompt = "A fluffy teddy bear sits on a bed of soft pillows surrounded by children's toys."
+  video = pipeline(prompt=prompt, num_frames=61, num_inference_steps=30).frames[0]
+  export_to_video(video, "output.mp4", fps=15)
+  ```
+
+  </details>
 
 
 ## HunyuanVideo15Pipeline
